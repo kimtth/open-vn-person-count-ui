@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -17,6 +18,19 @@ const useStyles = makeStyles((theme) => ({
 export default function UploadButton() {
     const classes = useStyles();
 
+    const uploadFile = (e) => {
+        e.preventDefault();
+        let file = this.state.fileToBeSent;
+        const formData = new FormData();
+      
+        formData.append("file", file);
+      
+        axios
+          .post("/upload", formData)
+          .then(res => console.log(res))
+          .catch(err => console.warn(err));
+    }
+
     return (
         <div className={classes.root}>
             <input
@@ -31,6 +45,7 @@ export default function UploadButton() {
                     style={{
                         backgroundColor: "#f44336",
                     }}
+                    onClick={uploadFile}
                     color="primary"
                     component="span">
                     Upload
